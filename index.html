@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>บริการหลักของ IBM Cloud | 0904327 Cloud Computing Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#161616;--mut:#525a66;--line:#dde1e9;--blue:#0f62fe;--soft:rgba(15,98,254,.1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161616;--card:#262626;--ink:#f4f4f4;--mut:#c6c6c6;--line:#393939;--blue:#78a9ff;--soft:rgba(120,169,255,.15)}}
+:root[data-theme="dark"]{--bg:#161616;--card:#262626;--ink:#f4f4f4;--mut:#c6c6c6;--line:#393939;--blue:#78a9ff;--soft:rgba(120,169,255,.15)}
+html{scroll-padding-top:80px}
+body{font-family:'Kanit',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px}
+.mut{color:var(--mut)}.bl{color:var(--blue)}
+.chip{padding:.35rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:.9rem;cursor:pointer}
+.chip.on{background:#0f62fe;color:#fff;border-color:#0f62fe}
+.lnk{cursor:pointer;transition:.2s;display:block}.lnk:hover{transform:translateY(-3px);border-color:#0f62fe;box-shadow:0 8px 24px rgba(15,98,254,.2)}
+.tag{font-size:.75rem;padding:.1rem .6rem;border-radius:6px;background:var(--soft);color:var(--blue)}
+th,td{padding:.65rem .85rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft)}
+.nav a{padding:.3rem .65rem;border-radius:6px;font-size:.9rem;color:#e0e0e0}.nav a:hover{background:rgba(255,255,255,.15)}.nav a.on{background:#0f62fe;color:#fff}
+.warn{border-left:4px solid #f1c21b}
+summary{cursor:pointer;font-weight:500}
+h2.t{font-size:1.6rem;font-weight:700;margin-bottom:.25rem}
+</style>
+</head>
+<body>
+<header class="sticky z-40 text-white" style="top:env(safe-area-inset-top,0px);background:#161616;border-bottom:2px solid #0f62fe">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <a href="#/" class="font-semibold text-sm sm:text-base">☁️ 0904327 Cloud Computing Technology</a>
+    <div class="flex gap-2 items-center">
+      <button id="theme" class="text-lg" aria-label="theme">🌓</button>
+      <button id="menuBtn" class="lg:hidden text-xl" aria-label="menu">☰</button>
+    </div>
+  </div>
+  <nav id="nav" class="nav hidden lg:flex max-w-6xl mx-auto px-4 pb-2 gap-1 flex-wrap flex-col lg:flex-row"></nav>
+</header>
+<main id="app" class="max-w-6xl mx-auto px-4 py-8 min-h-screen"></main>
+<footer class="text-white mt-8" style="background:#161616">
+  <div class="max-w-6xl mx-auto px-4 py-10 text-sm">
+    <b>รายงานเรื่อง บริการหลักของบริการ IBM Cloud</b>
+    <p class="text-gray-400">รายวิชา 0904327 เทคโนโลยีการประมวลผลแบบคลาวด์ · คณะการบัญชีและการจัดการ มหาวิทยาลัยมหาสารคาม</p>
+    <p class="mt-2">จัดทำโดยนิสิตสาขาธุรกิจดิจิทัลและระบบสารสนเทศ ชั้นปีที่ 3 · เสนอ อาจารย์ ดร.อิทธิพล เอี่ยมภูงา · <a href="#/team" class="underline text-cyan-300">ดูรายชื่อผู้จัดทำ</a></p>
+  </div>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const S=[
+{id:'iaas',ic:'🖥️',n:'IaaS',f:'Infrastructure as a Service',c:'Compute',
+d:'การให้บริการโครงสร้างพื้นฐานไอทีผ่านคลาวด์ เช่น ทรัพยากรประมวลผล เครื่องแม่ข่าย พื้นที่จัดเก็บ และเครือข่าย IBM ดูแลโครงสร้างพื้นฐานทางกายภาพ ส่วนผู้ใช้ควบคุมทรัพยากรที่จัดสรร และรับผิดชอบระบบปฏิบัติการ ซอฟต์แวร์ และข้อมูลตามขอบเขตของบริการ เหมาะกับองค์กรที่ต้องการความยืดหยุ่นในการกำหนดระบบด้วยตนเอง',
+p:[['IBM Cloud Virtual Servers for VPC','เครื่องแม่ข่ายเสมือนภายใน VPC เลือกโปรไฟล์ CPU/หน่วยความจำได้ IBM ระบุเป็น IaaS โดยตรง ใช้ทำเว็บเซิร์ฟเวอร์ ประมวลผลแอป หรือทดสอบซอฟต์แวร์ และแยกเครื่องพัฒนาออกจากเครื่องใช้งานจริงได้'],['IBM Cloud Bare Metal Servers','เครื่องแม่ข่ายทางกายภาพแบบ Single Tenant ได้ทรัพยากรเฉพาะราย เหมาะกับงานข้อมูลขนาดใหญ่ ระบบที่ใช้ทรัพยากรต่อเนื่อง หรือต้องแยกจากผู้ใช้อื่น ต้องพิจารณาค่าใช้จ่ายและข้อกำหนดซอฟต์แวร์'],['IBM Cloud Virtual Private Cloud (VPC)','สภาพแวดล้อมเครือข่ายที่แยกเชิงตรรกะบน IBM Cloud จัดสรรเครื่องและกำหนดการเชื่อมต่อของทรัพยากรได้ เป็นองค์ประกอบสำคัญของโครงสร้างพื้นฐานบนคลาวด์']],
+k:[['จัดสรรทรัพยากรตามความต้องการ','เลือกขนาดเครื่องให้สอดคล้องกับภาระงาน เช่น งานข้อมูลมากต้องการ CPU สูง บางงานต้องการหน่วยความจำมาก'],['ควบคุมสภาพแวดล้อมของระบบ','ติดตั้งเว็บเซิร์ฟเวอร์ เครื่องมือพัฒนา และแอปของตนเองได้ แต่ต้องดูแลการอัปเดตและความปลอดภัยในส่วนที่รับผิดชอบ'],['จัดการผ่านเครื่องมือหลายรูปแบบ','รองรับ Console, CLI, API และ Terraform'],['จัดวางตามสถาปัตยกรรม','ให้เครื่องแต่ละเครื่องทำหน้าที่ต่างกัน เช่น รับคำขอ กับประมวลผลภายใน โดยพิจารณาเครือข่าย พื้นที่จัดเก็บ และความปลอดภัยร่วมกัน']],
+b:'ลดความจำเป็นในการจัดซื้อและติดตั้งเครื่องแม่ข่ายล่วงหน้า เลือกทรัพยากรให้เหมาะกับงานจริง และควบคุมระบบปฏิบัติการ/ซอฟต์แวร์ได้เองเพื่อรองรับแอปที่มีข้อกำหนดเฉพาะ',
+x:'ตัวอย่าง: สร้างเว็บไซต์องค์กรด้วยเครื่องเสมือนสำหรับเว็บและแอป กำหนดเครือข่ายให้แต่ละส่วนติดต่อกัน หากต้องการเครื่องเฉพาะรายอาจเพิ่ม Bare Metal'},
+{id:'caas',ic:'📦',n:'CaaS',f:'Container as a Service',c:'Compute',
+d:'การให้บริการนำแอปพลิเคชันในรูปแบบคอนเทนเนอร์ขึ้นใช้งานและจัดการบนคลาวด์ คอนเทนเนอร์รวมแอปกับส่วนประกอบที่จำเป็นไว้ด้วยกัน ทำให้รันในสภาพแวดล้อมที่รองรับได้สอดคล้องกัน เมื่อมีหลายคอนเทนเนอร์ต้องมีเครื่องมือกำหนดว่าจะรันที่ใด กี่ชุด และเชื่อมต่อกันอย่างไร',
+p:[['IBM Cloud Kubernetes Service','Kubernetes แบบจัดการให้ ควบคุมคอนเทนเนอร์ใน Cluster ประกอบด้วย Control Plane (IBM จัดการ) และ Worker Nodes (อยู่ในบัญชีโครงสร้างพื้นฐานของผู้ใช้ จัดการผ่านบริการ)'],['Red Hat OpenShift on IBM Cloud','แพลตฟอร์มคอนเทนเนอร์บน Kubernetes พร้อมเครื่องมือสร้างแอปและ Console สำหรับนักพัฒนา เกี่ยวข้องทั้ง CaaS และ PaaS IBM ดูแล Control Plane ผู้ใช้ดูแลแอป สิทธิ์ และอัปเดต Worker Nodes'],['IBM Cloud Container Registry','จัดเก็บ Container Image พร้อม Vulnerability Advisor ตรวจสอบข้อมูลช่องโหว่และความปลอดภัยของ Image']],
+k:[['นำแอปขึ้นใช้งานจาก Container Image','ทีมพัฒนาเตรียม Image แล้วให้แพลตฟอร์มสร้างคอนเทนเนอร์บน Worker Nodes ติดตามการเปลี่ยนแปลงระหว่างรุ่นได้ชัดเจน'],['แยกแอปเป็น Microservices','เช่น บริการสมาชิก สินค้า คำสั่งซื้อ พัฒนาแยกกันได้ แต่ต้องออกแบบการสื่อสารและจัดการข้อมูลร่วมด้วย'],['รองรับการขยายระบบ','เมื่อเพิ่มคอนเทนเนอร์อาจต้องเพิ่ม Worker Nodes OpenShift รองรับ Cluster Autoscaler'],['ตรวจสอบ Image ก่อนใช้งาน','ใช้ Vulnerability Advisor ประกอบการปรับปรุงซอฟต์แวร์ใน Image ควบคู่กับการกำหนดสิทธิ์']],
+b:'จัดการแอปแบบคอนเทนเนอร์หลายส่วนอย่างเป็นระบบ ลดภาระดูแล Control Plane ทีมพัฒนาและทีมดูแลระบบอ้างอิง Image เดียวกันได้ อย่างไรก็ตามผู้ใช้ยังต้องเข้าใจคอนเทนเนอร์ เครือข่าย และการจัดการ Cluster'},
+{id:'paas',ic:'🧱',n:'PaaS',f:'Platform as a Service',c:'Compute',
+d:'การให้บริการแพลตฟอร์มสำหรับพัฒนาและนำแอปขึ้นใช้งาน ผู้ให้บริการดูแลโครงสร้างพื้นฐานและส่วนประกอบของแพลตฟอร์มตามขอบเขต นักพัฒนาจึงโฟกัสการเขียนโปรแกรมและการทำงานของแอปได้มากขึ้น',
+p:[['IBM Cloud Code Engine','แพลตฟอร์ม Serverless ที่ IBM จัดการ รองรับเว็บแอป บริการย่อย ฟังก์ชัน และงาน Batch นำ Source Code หรือ Container Image มารันได้โดยไม่ต้องจัดการ Cluster เอง (Serverless = ไม่ต้องจัดสรร/ดูแลเครื่องโดยตรง)'],['Red Hat OpenShift on IBM Cloud','รองรับพัฒนาแอปแบบคอนเทนเนอร์ พร้อมเครื่องมือด้าน Project, Build และการนำแอปขึ้นใช้งาน']],
+k:[['นำ Source Code หรือ Image ขึ้นใช้งาน','สร้าง Image จาก Source Code ด้วย Dockerfile หรือ Cloud Native Buildpacks และเข้าถึง Repository/Registry ที่กำหนดได้'],['รองรับงานหลายรูปแบบ','Application รับ HTTP request ส่วน Job เริ่มประมวลผลจนเสร็จแล้วจบ เช่น ประมวลผลข้อมูลเป็นชุด'],['ปรับจำนวนชุดตามคำขอ','ปรับขึ้น/ลงตามคำขอ และลดลงเป็นศูนย์ได้เมื่อไม่มีงาน'],['จัดการค่าตั้งค่าและเชื่อมบริการ','Configmap สำหรับค่าทั่วไป, Secret สำหรับข้อมูลอ่อนไหว, Service Binding เชื่อมกับบริการอื่นของ IBM Cloud']],
+b:'ลดงานจัดเตรียมสภาพแวดล้อมและโครงสร้างพื้นฐาน ทีมมีเวลาทำงานกับแอปมากขึ้น และรองรับแอปที่ปริมาณใช้งานเปลี่ยนแปลง',
+x:'ตัวอย่าง: เว็บไซต์ลงทะเบียนกิจกรรมที่ผู้ใช้เยอะช่วงเปิดรับสมัครแล้วลดลงภายหลัง'},
+{id:'faas',ic:'⚡',n:'FaaS',f:'Function as a Service',c:'Compute',
+d:'การให้บริการประมวลผลโค้ดในรูปแบบฟังก์ชันเมื่อมีการเรียกใช้ ฟังก์ชันมักทำหน้าที่เฉพาะ เช่น ตรวจสอบข้อมูล คำนวณผล หรือเรียกบริการอื่น แล้วส่งผลกลับ โค้ดเป็นแบบ Stateless ไม่ควรพึ่งการเก็บสถานะถาวรในฟังก์ชัน หากต้องเก็บข้อมูลควรใช้ฐานข้อมูลหรือบริการจัดเก็บภายนอก',
+p:[['IBM Cloud Code Engine Functions','ส่วนหนึ่งของ Code Engine รันโค้ดเมื่อได้รับคำขอ HTTP สร้างฟังก์ชันจากโค้ดโดยตรง Source Code ใน Repository หรือไฟล์จากเครื่องผู้พัฒนา']],
+k:[['ประมวลผลเมื่อได้รับคำขอ','เรียกผ่าน Endpoint แล้วส่งผลกลับ กำหนดเนื้อหา HTTP Status Code และ Response Headers ได้'],['เหมาะกับงานเล็กเวลาสั้น','ระยะเวลาทำงานสูงสุดสั้นกว่า Application/Job ถ้างานนานหรือเป็นชุดควรใช้ Job'],['กำหนดระดับการเข้าถึง','รับคำขอจากอินเทอร์เน็ต เครือข่ายส่วนตัว IBM Cloud หรือภายใน Code Engine Project เดียวกัน'],['เชื่อมกับบริการอื่น','ใช้ Environment Variables, Configmap, Secret และ Service Binding เช่น เชื่อมฐานข้อมูล']],
+b:'แยกงานเฉพาะเป็นฟังก์ชันที่เรียกใช้ได้ ลดภาระจัดเตรียมเครื่อง นักพัฒนาโฟกัสตรรกะของงาน เหมาะกับงานที่เรียกเป็นครั้ง ๆ และใช้เวลาสั้น',
+x:'⚠️ IBM Cloud Functions (Apache OpenWhisk) ถูกประกาศยุติ รองรับทรัพยากรเดิมถึง ต.ค. ค.ศ. 2024 รายงานจึงใช้ Code Engine Functions เป็นผลิตภัณฑ์หลักของ FaaS'},
+{id:'dbaas',ic:'🗄️',n:'DBaaS',f:'Database as a Service',c:'Data',
+d:'การให้บริการฐานข้อมูลบนคลาวด์ที่ผู้ให้บริการดูแลระบบฐานข้อมูลและโครงสร้างพื้นฐานตามขอบเขต ผู้ใช้สร้างฐานข้อมูลและเชื่อมต่อจากแอป ลดภาระติดตั้งและบำรุงรักษาเอง มีทั้งฐานข้อมูลเชิงสัมพันธ์และ NoSQL เลือกตามลักษณะข้อมูลและวิธีค้นหา',
+p:[['Databases for PostgreSQL','PostgreSQL แบบจัดการให้ ฐานข้อมูลเชิงสัมพันธ์โอเพนซอร์ส ใช้ SQL เหมาะกับข้อมูลสมาชิก สินค้า คำสั่งซื้อ'],['Databases for MySQL','MySQL แบบจัดการให้ เหมาะกับแอปที่พัฒนาด้วย MySQL แทนการติดตั้งและดูแลเอง'],['Databases for MongoDB','ฐานข้อมูลแบบเอกสาร รองรับการค้นหาและ Aggregation เหมาะกับข้อมูลหลายรูปแบบ เช่น รายละเอียดสินค้าที่ต่างกันตามประเภท'],['IBM Cloudant','NoSQL เก็บเอกสาร JSON เข้าถึงผ่าน HTTPS API ยืดหยุ่นด้านโครงสร้าง มี SDK สำหรับ Node.js, Java, Python, Go'],['Databases for Redis','จัดเก็บข้อมูลในหน่วยความจำ เข้าถึงเร็ว ใช้เป็น Cache ลดการอ่านซ้ำจากฐานข้อมูลหลัก']],
+k:[['สร้างและเชื่อมต่อฐานข้อมูล','นำข้อมูลการเชื่อมต่อไปตั้งค่าในแอป ผ่านไดรเวอร์/เครื่องมือของฐานข้อมูลหรือ HTTPS API (Cloudant)'],['สำรองข้อมูลและกู้คืน','ผ่านส่วน Backups and Restore และสร้างข้อมูลสำรองก่อนเปลี่ยนแปลงสำคัญ'],['รองรับความพร้อมใช้งานสูง','High Availability แต่สถาปัตยกรรมต่างกันตามประเภทฐานข้อมูล'],['ปรับทรัพยากร','ปรับขนาดผ่านคำสั่งของบริการ ไม่ใช่ทุกประเภทปรับอัตโนมัติเหมือนกัน'],['ความปลอดภัยและแบ่งความรับผิดชอบ','บริการดูแลการเข้ารหัสข้อมูลที่จัดเก็บ ระหว่างรับส่ง และข้อมูลสำรอง ผู้ใช้ดูแลรหัสผ่านและข้อมูลรับรอง']],
+b:'ลดภาระติดตั้งและบำรุงรักษาฐานข้อมูล เลือกประเภทให้เหมาะกับงาน ปรับทรัพยากรผ่านตัวเลือกของบริการ และมีสำรอง/กู้คืน/HA สนับสนุนการให้บริการ'},
+{id:'sec',ic:'🔐',n:'Security & Identity',f:'การรักษาความปลอดภัยและจัดการตัวตน',c:'Security',
+d:'กลุ่มบริการที่ช่วยรักษาความปลอดภัยของข้อมูล แอป และทรัพยากรบนคลาวด์ รวมถึงจัดการตัวตนและสิทธิ์ ครอบคลุมการกำหนดสิทธิ์ ปกป้องข้อมูลสำคัญ จัดการกุญแจเข้ารหัส และป้องกันภัยคุกคามต่อเว็บไซต์ ต้องอาศัยการตั้งค่าขององค์กร เช่น ให้สิทธิ์เท่าที่จำเป็น เก็บข้อมูลรับรองอย่างปลอดภัย และตรวจสอบกิจกรรมต่อเนื่อง',
+p:[['IBM Cloud IAM','จัดการตัวตนและสิทธิ์ กำหนด Access Policy ให้ผู้ใช้และแอป จัดผู้ใช้เป็น Access Group'],['IBM Key Protect','จัดการกุญแจเข้ารหัส สร้าง/นำเข้ากุญแจ ตรวจสถานะ หมุนเวียนกุญแจ เช่น เข้ารหัสข้อมูลใน Cloud Object Storage'],['IBM Cloud Secrets Manager','จัดเก็บข้อมูลลับ เช่น รหัสผ่าน API Key แยกจาก Source Code กำหนดสิทธิ์ผ่าน IAM'],['IBM Cloud Internet Services (CIS)','ปกป้องและเพิ่มประสิทธิภาพเว็บไซต์/API: ป้องกัน DDoS, WAF, Rate Limiting'],['Activity Tracker Event Routing','ส่ง Audit Events จากบริการไปยังปลายทางที่เลือก เช่น IBM Cloud Logs เพื่อตรวจสอบย้อนหลัง']],
+k:[['กำหนดสิทธิ์ตามหน้าที่ (Least Privilege)','ผู้ตรวจสอบข้อมูลไม่จำเป็นต้องมีสิทธิ์ลบทรัพยากร เมื่อเปลี่ยนหน้าที่ปรับสมาชิก Access Group หรือนโยบาย'],['แยกตัวตนแอปออกจากผู้ใช้','ใช้ Service ID ให้แอปมีสิทธิ์เฉพาะ ไม่ต้องใช้ข้อมูลรับรองของพนักงาน'],['ปกป้องกุญแจและข้อมูลลับ','Key Protect เน้นกุญแจเข้ารหัสข้อมูล, Secrets Manager เน้นข้อมูลลับที่ใช้เข้าถึงระบบ'],['ป้องกันและตรวจสอบภัยคุกคาม','CIS กรองคำขอ และส่ง Audit Events เพื่อวิเคราะห์เมื่อพบความผิดปกติ']],
+b:'กำหนดสิทธิ์เข้าถึงอย่างเป็นระบบ ลดการเปิดเผยข้อมูลรับรองโดยไม่จำเป็น จัดการกุญแจด้วยบริการเฉพาะ และสนับสนุนการดูแลระบบต่อเนื่อง'},
+{id:'iot',ic:'📡',n:'IoT',f:'Internet of Things',c:'Network',
+d:'การเชื่อมต่ออุปกรณ์ เครื่องจักร และเซนเซอร์ผ่านเครือข่ายเพื่อรับส่งและใช้ประโยชน์ข้อมูล เช่น วัดอุณหภูมิ ติดตามพลังงาน เฝ้าระวังเครื่องจักร คลาวด์เป็นส่วนกลางรับ จัดเก็บ ประมวลผล และแสดงผล IBM Cloud อธิบายในฐานะโครงสร้างพื้นฐานและบริการที่ประกอบเป็นระบบ IoT องค์กรต้องออกแบบส่วนเชื่อมอุปกรณ์ การรับส่งข้อความ ประมวลผล และจัดเก็บเอง',
+p:[['IBM Watson IoT Platform (ยุติแล้ว)','เคยเชื่อมต่ออุปกรณ์และรับข้อมูลจากเซนเซอร์ ยุติบริการแล้วเมื่อ 1 ธ.ค. ค.ศ. 2023'],['IBM Event Streams','บริการรับส่งข้อมูลเหตุการณ์บน Apache Kafka กระจายข้อมูลระหว่างบริการกับแอป'],['IBM Cloud Kubernetes Service','รันองค์ประกอบ IoT แบบคอนเทนเนอร์ เช่น แอปรับข้อมูล และ MQTT Broker (องค์กรติดตั้งและดูแลเอง)'],['IBM Cloud Code Engine','รันแอปหรือ Job ประมวลผลข้อมูล เช่น ตรวจสอบข้อมูลผ่าน HTTP API หรือสรุปรายวัน'],['Cloud Object Storage + ฐานข้อมูล','Object Storage เก็บข้อมูลดิบ/ย้อนหลัง ฐานข้อมูลเก็บข้อมูลที่ต้องค้นหาและแสดงผล']],
+k:[['รับข้อมูลจากอุปกรณ์และ Gateway','เซนเซอร์ส่งข้อมูลผ่านเครือข่าย Gateway อาจรวบรวมและแปลงข้อมูลก่อนส่งขึ้นคลาวด์'],['ตรวจสอบตัวตนและสิทธิ์อุปกรณ์','ต้องออกแบบแยกจากสิทธิ์ของบริการคลาวด์ เช่น IAM'],['ส่งต่อและประมวลผล','ส่งผ่าน Event Streams ไปส่วนแสดงผล ตรวจเงื่อนไข และจัดเก็บ'],['จัดเก็บเพื่อวิเคราะห์ย้อนหลัง','ควรมีรหัสอุปกรณ์ เวลา และหน่วยวัด เพื่อตีความข้อมูลได้ถูกต้อง']],
+b:'รวบรวมข้อมูลจากหลายอุปกรณ์เข้าระบบกลาง ติดตามการทำงาน ตรวจความผิดปกติ วิเคราะห์ย้อนหลัง และวางแผนทรัพยากรตามขนาดระบบ'},
+{id:'sta',ic:'💾',n:'STaaS',f:'Storage as a Service',c:'Data',
+d:'การให้บริการพื้นที่จัดเก็บข้อมูลผ่านคลาวด์ สำหรับข้อมูลแอป เอกสาร รูปภาพ ข้อมูลสำรอง และข้อมูลย้อนหลัง IBM Cloud มี 3 รูปแบบ: Object, Block และ File เลือกตามว่าแอปเข้าถึงข้อมูลเป็นวัตถุ ดิสก์ หรือไฟล์ที่ใช้ร่วมกัน',
+p:[['IBM Cloud Object Storage','เก็บข้อมูลเป็น Object ใน Bucket เข้าถึงผ่าน API เหมาะกับรูปภาพ วิดีโอ เอกสาร ไฟล์วิเคราะห์ มี Storage Class ตามความถี่เข้าถึง'],['Block Storage for VPC','เหมือนดิสก์ต่อกับเครื่องเสมือนใน VPC ใช้เป็น Boot Volume (ระบบปฏิบัติการ) หรือ Data Volume'],['File Storage for VPC','จัดเก็บแบบไฟล์ผ่าน NFS สร้าง File Share ให้หลายเครื่องใช้ไฟล์ร่วมกัน ลดการทำสำเนาไฟล์แยกในแต่ละเครื่อง']],
+k:[['เลือกรูปแบบให้เหมาะกับงาน','Object ผ่าน API, Block เป็นพื้นที่ของเครื่อง, File ใช้ร่วมกันหลายเครื่อง ใช้ร่วมกันในระบบเดียวได้'],['เพิ่มความจุและกำหนดประสิทธิภาพ','Block/File for VPC เริ่มเล็กแล้วขยายได้ File Storage ปรับขีดจำกัดประสิทธิภาพได้'],['Storage Class ตามความถี่เข้าถึง','มีตัวเลือกข้อมูลใช้บ่อย/น้อย Smart Tier จัดระดับค่าใช้จ่ายตามการใช้รายเดือน และ Archive สำหรับเก็บระยะยาว (คำนึงถึงเวลาดึงกลับ)'],['เวอร์ชันและ Lifecycle','เก็บหลายเวอร์ชันของ Object และกฎลบ/ย้าย Archive ตามเงื่อนไข ระวังพื้นที่ที่เพิ่มและข้อมูลที่ต้องเก็บ'],['สำรองและความปลอดภัย','VPC มี Snapshot/Backup, Object Storage เชื่อม Key Protect เพื่อเข้ารหัส Bucket']],
+b:'ลดภาระจัดซื้อและดูแลอุปกรณ์จัดเก็บ เลือกประเภทตามลักษณะงาน วางแผนความจุ ประสิทธิภาพ และใช้เวอร์ชัน การสำรอง การเข้ารหัสดูแลข้อมูล'},
+{id:'bigdata',ic:'📊',n:'Big Data & Analytics',f:'ข้อมูลขนาดใหญ่และการวิเคราะห์',c:'Data',
+d:'กลุ่มบริการและเครื่องมือสำหรับจัดเก็บ จัดเตรียม ประมวลผล และวิเคราะห์ข้อมูลจำนวนมากหรือจากหลายแหล่ง เพื่อเปลี่ยนเป็นสารสนเทศประกอบการตัดสินใจ เช่น วิเคราะห์ยอดขาย พฤติกรรมลูกค้า ประสิทธิภาพการดำเนินงาน',
+p:[['IBM watsonx.data','แพลตฟอร์ม Data Lakehouse รวมความยืดหยุ่นของ Data Lake (หลายรูปแบบข้อมูล) กับการจัดการ/วิเคราะห์แบบ Data Warehouse รองรับงานวิเคราะห์และ AI'],['IBM Analytics Engine','Standard Serverless สำหรับ Apache Spark ประมวลผลโดยไม่ต้องดูแลคลัสเตอร์ Spark เอง ส่งแอป Spark ผ่าน API'],['IBM Db2 Warehouse','คลังข้อมูลสำหรับงานวิเคราะห์ (SaaS บน IBM Cloud) สร้างรายงานและสนับสนุน Dashboard'],['IBM Cloud Object Storage','จัดเก็บไฟล์ข้อมูลดิบ ข้อมูลย้อนหลัง และผลลัพธ์ ต้องใช้ร่วมกับเครื่องมือวิเคราะห์']],
+k:[['รวบรวมข้อมูลจากหลายแหล่ง','ฐานข้อมูลระบบงาน ไฟล์เอกสาร พื้นที่จัดเก็บบนคลาวด์'],['จัดเตรียมและประมวลผล','ตรวจคุณภาพ เช่น ค่าสูญหาย ข้อมูลซ้ำ รูปแบบวันที่ไม่ตรงกัน แล้วแปลงด้วย Spark'],['วิเคราะห์ด้วยเครื่องมือที่เหมาะ','ใช้ SQL ในคลังข้อมูลคำนวณยอดขายตามสินค้า สาขา ช่วงเวลา'],['จัดการทรัพยากร','กำหนด Spark Driver/Executor ใน Analytics Engine; Db2 Warehouse แยกส่วนประมวลผลและจัดเก็บ'],['นำผลไปตัดสินใจ','ทำรายงาน/Dashboard เปรียบเทียบยอดขายกับเป้า ค้นหาช่วงความต้องการสูง']],
+b:'จัดการข้อมูลหลายแหล่ง เลือกเครื่องมือเหมาะกับงาน ลดภาระโครงสร้างพื้นฐานบางส่วน และสนับสนุนรายงาน วิเคราะห์แนวโน้ม หรือพัฒนางาน AI'},
+{id:'bcaas',ic:'⛓️',n:'BCaaS',f:'Blockchain as a Service',c:'Data',
+d:'การให้บริการแพลตฟอร์มและองค์ประกอบสำหรับพัฒนาและดำเนินงานเครือข่ายบล็อกเชนบนคลาวด์ ลดภาระจัดเตรียมโครงสร้างพื้นฐานบางส่วน ผู้ใช้ยังต้องออกแบบกติกาเครือข่าย สิทธิ์สมาชิก และตรรกะแอป บล็อกเชนองค์กรช่วยให้หลายหน่วยงานบันทึกธุรกรรมร่วมกัน เช่น การส่งมอบสินค้าระหว่างผู้ผลิต ผู้ขนส่ง ผู้รับ',
+p:[['IBM Blockchain Platform (ผลิตภัณฑ์เดิม)','ใช้ Hyperledger Fabric เป็นพื้นฐาน มีเครื่องมือจัดการองค์ประกอบเครือข่าย'],['IBM Support for Hyperledger Fabric','ผลิตภัณฑ์และการสนับสนุน Fabric พร้อมแนวทางติดตั้งบน Kubernetes Cluster และเครื่องมือพัฒนา Smart Contract'],['Hyperledger Fabric','กรอบบล็อกเชนโอเพนซอร์สแบบ Permissioned สมาชิกมีตัวตนและบทบาทกำหนดไว้ เป็นเทคโนโลยีพื้นฐาน ไม่ใช่บริการคลาวด์ของ IBM ในตัวเอง']],
+k:[['กำหนดสมาชิกและกติกา','ต้องกำหนดสมาชิกและสิทธิ์ก่อนใช้ เช่น ใครส่ง ตรวจสอบ หรืออ่านข้อมูลได้'],['บันทึกธุรกรรมใน Ledger','ผ่านการตรวจสอบตามกติกาก่อนบันทึก ความน่าเชื่อถือขึ้นกับความถูกต้องของข้อมูลนำเข้า'],['Smart Contract / Chaincode','โค้ดกำหนดเงื่อนไขและการดำเนินการ เช่น เงื่อนไขการเปลี่ยนสถานะสินค้า'],['ควบคุมการแบ่งปันข้อมูล','แบ่งปันเฉพาะข้อมูลที่ต้องการแก่สมาชิกที่เกี่ยวข้อง'],['ดำเนินงานบนโครงสร้างพื้นฐานคลาวด์','ต้องวางแผนทรัพยากร เครือข่าย จัดเก็บ และแยกหน้าที่ผู้ให้บริการกับการดูแลซอฟต์แวร์บล็อกเชน']],
+b:'หลายองค์กรใช้ประวัติธุรกรรมร่วมกัน ตรวจสอบที่มาของรายการ และดำเนินงานตามกติกาผ่าน Smart Contract',
+x:'⚠️ IBM Blockchain Platform Software Edition สิ้นสุดการสนับสนุน 30 เม.ย. ค.ศ. 2023 และให้ย้ายไป IBM Support for Hyperledger Fabric — เป็นสถานะของ Software Edition เท่านั้น ไม่ใช่วันยุติบริการ IBM Cloud ทุกรูปแบบ'},
+{id:'lb',ic:'🔀',n:'LBaaS',f:'Load Balancer as a Service',c:'Network',
+d:'การให้บริการกระจายคำขอหรือการรับส่งข้อมูลไปยังเครื่องแม่ข่ายหลายเครื่อง แบ่งภาระงานและรองรับการให้บริการ ผู้ใช้กำหนดกลุ่มเครื่องปลายทางและเงื่อนไขกระจายงาน โดยไม่ต้องติดตั้งอุปกรณ์ Load Balancer ทางกายภาพ',
+p:[['Application Load Balancer for VPC (ALB)','กระจายคำขอไปยังเครื่องใน VPC ภายใน Region เดียวกัน เน้นเว็บระดับ Layer 7 และรองรับ Layer 4 บางรูปแบบ มีแบบ Public/Private รองรับ SSL Offloading'],['Network Load Balancer for VPC (NLB)','กระจายระดับ Layer 4 ตาม IP Address และ Port รองรับ TCP/UDP ไม่ตรวจเนื้อหาแบบเว็บ และไม่มี SSL Offloading แบบ ALB']],
+k:[['Listener และ Backend Pool','Listener เป็นจุดรับการเชื่อมต่อ ส่งต่อไปยังสมาชิกของ Pool (กลุ่มเครื่องปลายทาง)'],['วิธีกระจายภาระงาน','Round Robin สลับไปทีละเครื่อง, Weighted Round Robin ตามน้ำหนักของเครื่อง'],['Health Check','ตรวจเครื่องปลายทางเป็นระยะ ส่งคำขอเฉพาะเป้าหมายที่ผ่าน'],['Public vs Private','Public รับจากอินเทอร์เน็ต เช่น เว็บลูกค้า, Private ใช้ผ่านเครือข่ายภายใน'],['รองรับการขยายระบบ','ALB ปรับความจุตามภาระงานและเชื่อมกับ Instance Groups ต้องวางแผนทั้งตัว Load Balancer และเครื่องแอป รวมถึงฐานข้อมูล']],
+b:'แบ่งภาระงานระหว่างเครื่อง ลดการกระจุกตัวของคำขอ เลี่ยงเครื่องที่ไม่ผ่าน Health Check และเพิ่มเครื่องแอปได้ผ่านจุดรับคำขอเดิม',
+x:'ตัวอย่าง: เว็บลงทะเบียนช่วงเปิดรับสมัคร ใช้ ALB กระจายไปหลายเครื่อง ต้องออกแบบแอปและระบบข้อมูลให้รองรับการทำงานหลายเครื่องด้วย'}
+];
+const REG=[['อเมริกาเหนือ','สหรัฐอเมริกา','ดัลลัส (Dallas)','us-south','MZR'],['อเมริกาเหนือ','สหรัฐอเมริกา','วอชิงตัน ดี.ซี.','us-east','MZR'],['อเมริกาเหนือ','แคนาดา','โทรอนโต (Toronto)','ca-tor','MZR'],['อเมริกาเหนือ','แคนาดา','มอนทรีออล (Montreal)','ca-mon','SC-MZR'],['อเมริกาใต้','บราซิล','เซาเปาลู (São Paulo)','br-sao','MZR'],['ยุโรป','เยอรมนี','แฟรงก์เฟิร์ต (Frankfurt)','eu-de','MZR'],['ยุโรป','สหราชอาณาจักร','ลอนดอน (London)','eu-gb','MZR'],['ยุโรป','สเปน','มาดริด (Madrid)','eu-es','MZR'],['เอเชียแปซิฟิก','ญี่ปุ่น','โตเกียว (Tokyo)','jp-tok','MZR'],['เอเชียแปซิฟิก','ญี่ปุ่น','โอซากา (Osaka)','jp-osa','SC-MZR'],['เอเชียแปซิฟิก','ออสเตรเลีย','ซิดนีย์ (Sydney)','au-syd','MZR'],['เอเชียแปซิฟิก','อินเดีย','เจนไน–Airtel (Chennai)','in-che','SC-MZR'],['เอเชียแปซิฟิก','อินเดีย','มุมไบ–Airtel (Mumbai)','in-mum','SC-MZR']];
+const PRO=[['Hybrid Cloud และ Multicloud','รองรับการทำงานร่วมกันระหว่างระบบภายในองค์กร คลาวด์ส่วนตัวและสาธารณะ โดยมี Kubernetes และ Red Hat OpenShift เป็นองค์ประกอบสำคัญ องค์กรย้ายระบบเข้าสู่คลาวด์ตามความพร้อมแทนการเปลี่ยนทั้งหมดครั้งเดียว'],['ทางเลือกด้านทรัพยากรประมวลผลหลากหลาย','มีทั้งเครื่องเสมือน Bare Metal คอนเทนเนอร์ และ Serverless เลือกให้เหมาะกับประสิทธิภาพ ระดับการควบคุม และภาระดูแล'],['บริการด้านความปลอดภัยและควบคุมการเข้าถึง','IAM, Key Protect, Secrets Manager รวมถึงเครื่องมือปกป้องแอปและตรวจสอบกิจกรรม ประโยชน์ยังขึ้นกับการตั้งค่าและการดูแลขององค์กร'],['บริการแบบจัดการให้ ลดภาระดูแลระบบ','Code Engine, Cloud Databases, Kubernetes service ลดงานจัดเตรียมและบำรุงรักษา ขอบเขตที่ IBM ดูแลต่างกันตามผลิตภัณฑ์'],['รองรับการออกแบบ High Availability','พื้นที่หลายโซนและหลาย Region ช่วยลดผลกระทบจากความขัดข้องเฉพาะพื้นที่ และวางแผนกู้คืนข้าม Region'],['ทางเลือกด้านข้อมูลและการวิเคราะห์','Cloud Databases, Analytics Engine, Db2 Warehouse, watsonx.data ครอบคลุมตั้งแต่จัดเก็บข้อมูลระบบงานถึงวิเคราะห์ประกอบการตัดสินใจ']];
+const CON=[['บริการไม่เปิดครบทุกพื้นที่','บางบริการ/คุณสมบัติที่ขึ้นกับฮาร์ดแวร์ไม่มีในทุก Location ต้องตรวจสอบก่อนเลือก Region หากเชื่อมข้าม Region ต้องประเมิน Latency ค่าใช้จ่าย และข้อกำหนดที่ตั้งข้อมูล'],['ค่าใช้จ่ายรวมมีหลายองค์ประกอบ','หน่วยคิดราคาต่างกันตามผลิตภัณฑ์ บางทรัพยากรยังคิดเงินแม้หยุดประมวลผล เช่น Storage ของเครื่องเสมือน ต้องประมาณทั้งระบบ'],['การบริหารบางประเภทต้องใช้ทักษะเฉพาะ','คอนเทนเนอร์และ Hybrid Cloud ต้องรู้เรื่องเครือข่าย สิทธิ์ จัดเก็บ และอัปเดต ทีมเล็กหรือขาดประสบการณ์อาจต้องใช้เวลาเรียนรู้'],['ผู้ใช้ยังมีหน้าที่ด้านความปลอดภัยและความต่อเนื่อง','ใช้หลักความรับผิดชอบร่วมกัน (Shared Responsibility) บริการแบบจัดการให้ไม่ได้โอนหน้าที่ดูแลแอป ข้อมูล และสิทธิ์ทั้งหมดไปยัง IBM'],['การย้ายระบบออกอาจมีต้นทุนและความซับซ้อน','เทคโนโลยีเปิดอย่าง Kubernetes/OpenShift ช่วยได้ แต่ถ้าผูกกับ API สิทธิ์ หรือบริการเฉพาะของ IBM มาก อาจต้องแก้โค้ด ย้ายข้อมูล และทดสอบใหม่'],['ต้องติดตามวงจรชีวิตบริการและศูนย์ข้อมูล','เช่น IBM Cloud Functions ถูกยุติ และศูนย์ข้อมูลบางแห่งมีแผนปิด/ย้าย ต้องวางแผนบริการทดแทน ปรับการเชื่อมต่อ และทดสอบหลังย้าย']];
+const PAGES=[['/','หน้าแรก'],['/services','Services'],['/locations','Locations'],['/pricing','Pricing'],['/proscons','Pros/Cons'],['/cert','Certification'],['/team','Team']];
+const H=(t,s)=>`<h2 class="t">${t}</h2>${s?`<p class="mut mb-6">${s}</p>`:'<div class="mb-6"></div>'}`;
+const go=p=>`#${p}`;
+const tbl=(h,rows)=>`<div class="card overflow-x-auto"><table class="w-full text-sm min-w-[520px]"><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const warn=t=>`<div class="card warn p-4 my-4 text-sm">⚠️ ${t}</div>`;
+const svcCard=s=>`<a href="#/service/${s.id}" class="lnk card p-5"><div class="flex justify-between"><span class="text-3xl">${s.ic}</span><span class="tag h-fit">${s.c}</span></div><h3 class="font-semibold text-lg mt-2">${s.n}</h3><p class="text-xs mut">${s.f}</p><p class="text-sm mut mt-2">${s.p.slice(0,2).map(x=>x[0]).join(' · ')}</p><p class="bl text-sm mt-2">ดูรายละเอียด →</p></a>`;
+
+let cat='All',kw='';
+const V={
+home(){return `
+<section class="rounded-2xl text-white text-center px-5 py-14 sm:py-20" style="background:linear-gradient(135deg,#0b1b3f,#0f62fe 60%,#08bdba)">
+<p class="tracking-widest text-cyan-200 text-sm">CLOUD COMPUTING REPORT</p>
+<h1 class="text-3xl sm:text-5xl font-bold mt-2 leading-tight">บริการหลักของบริการ<br>IBM Cloud</h1>
+<p class="mt-4 text-blue-100">คณะการบัญชีและการจัดการ · มหาวิทยาลัยมหาสารคาม</p>
+<p class="text-blue-100 text-sm">รายวิชา 0904327 เทคโนโลยีการประมวลผลแบบคลาวด์ (Cloud Computing Technology)</p>
+<a href="#/services" class="inline-block mt-7 px-8 py-3 rounded bg-white text-blue-700 font-semibold">เริ่มสำรวจบริการ →</a>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 max-w-3xl mx-auto">
+${[['11','ประเภทบริการ'],['13','Multizone Regions'],['4','รูปแบบราคา'],['3','ระดับ Certification']].map(x=>`<div class="bg-white/10 rounded-lg p-3"><div class="text-3xl font-bold">${x[0]}</div><div class="text-xs">${x[1]}</div></div>`).join('')}</div></section>
+<section class="mt-10">${H('📘 ภาพรวม IBM Cloud')}
+<div class="card p-5 space-y-3 mut"><p>IBM Cloud เป็นแพลตฟอร์มประมวลผลแบบคลาวด์ของบริษัท IBM ให้ทรัพยากรและเครื่องมือสำหรับพัฒนา ติดตั้ง และดำเนินงานระบบสารสนเทศ ตั้งแต่โครงสร้างพื้นฐาน เช่น เครื่องแม่ข่ายและเครือข่าย ไปจนถึงแพลตฟอร์มสำหรับแอป คอนเทนเนอร์ และฐานข้อมูล</p>
+<p><b class="bl">วิธีเลือกบริการ:</b> ถ้าต้องการกำหนดระบบปฏิบัติการและติดตั้งซอฟต์แวร์เอง → <b>IaaS</b> · ถ้าต้องการลดภาระดูแลเครื่องและเน้นพัฒนาแอป → <b>Code Engine (PaaS)</b> · ระบบแบบคอนเทนเนอร์ → <b>Kubernetes / OpenShift (CaaS)</b></p>
+<p>ผลิตภัณฑ์หนึ่งรองรับได้หลายรูปแบบ เช่น Code Engine รองรับทั้งรันแอป (PaaS) และรันฟังก์ชัน (FaaS)</p>
+<p><b class="bl">Shared Responsibility:</b> บริการที่ผู้ให้บริการจัดการให้ไม่ได้หมายความว่าองค์กรไม่ต้องดูแล ผู้ใช้ยังรับผิดชอบข้อมูล แอปพลิเคชัน สิทธิ์การเข้าถึง และการตั้งค่าตามขอบเขตของแต่ละบริการ</p></div></section>
+<section class="mt-10">${H('🧭 สำรวจหัวข้อ','คลิกเพื่อไปยังหน้าต่าง ๆ')}
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+${[['/services','🧩','Service Catalog','บริการหลัก 11 ประเภท พร้อมหน้ารายละเอียดแต่ละบริการ'],['/locations','🌍','Data Center Locations','Region/Zone, MZR vs SC-MZR, ตาราง 13 พื้นที่'],['/pricing','💰','Pricing Model','Pay-As-You-Go, Subscription, Reservations, Free'],['/proscons','⚖️','Pros & Cons','ข้อดี 6 ข้อ ข้อเสีย 6 ข้อ พร้อมเหตุผล'],['/cert','🎓','Certification Path','โครงสร้างการรับรองและแนวทางสำหรับนิสิต'],['/team','👥','ผู้จัดทำ','รายชื่อนิสิตและอาจารย์ผู้สอน']].map(x=>`<a href="#${x[0]}" class="lnk card p-5"><div class="text-3xl">${x[1]}</div><h3 class="font-semibold mt-1">${x[2]}</h3><p class="text-sm mut">${x[3]}</p></a>`).join('')}</div></section>`},
+
+services(){
+ const r=S.filter(s=>(cat=='All'||s.c==cat)&&(!kw||JSON.stringify(s).toLowerCase().includes(kw)));
+ return `${H('🧩 Service Catalog','บริการหลัก 11 ประเภท — คลิกการ์ดเพื่อเปิดหน้ารายละเอียด')}
+<input id="q" type="search" value="${kw}" placeholder="🔍 ค้นหาชื่อบริการหรือ Keyword เช่น Kubernetes, Kafka, WAF, Cloudant…" class="w-full card px-4 py-3 mb-4 outline-none" style="color:var(--ink)">
+<div class="flex flex-wrap gap-2 mb-6">${['All','Compute','Data','Security','Network'].map(c=>`<button class="chip ${c==cat?'on':''}" data-c="${c}">${c}</button>`).join('')}</div>
+<div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">${r.map(svcCard).join('')||'<p class="mut">ไม่พบบริการที่ตรงกับคำค้นหา</p>'}</div>`},
+
+service(id){
+ const i=S.findIndex(s=>s.id==id);if(i<0)return V.services();const s=S[i],pv=S[(i+S.length-1)%S.length],nx=S[(i+1)%S.length];
+ return `<a href="#/services" class="bl text-sm">← กลับไปทุกบริการ</a>
+<div class="grid lg:grid-cols-[220px_1fr] gap-6 mt-3">
+<aside class="hidden lg:block card p-2 h-fit sticky" style="top:110px">${S.map(x=>`<a href="#/service/${x.id}" class="block px-3 py-2 rounded text-sm ${x.id==id?'bg-blue-600 text-white':''}">${x.ic} ${x.n}</a>`).join('')}</aside>
+<div>
+<div class="rounded-xl text-white p-6" style="background:linear-gradient(135deg,#0f62fe,#08bdba)"><div class="text-4xl">${s.ic}</div><h1 class="text-2xl sm:text-3xl font-bold">${s.n}</h1><p class="opacity-90">${s.f}</p></div>
+<section class="card p-5 mt-4"><h3 class="font-semibold bl mb-1">ความหมายและบทบาทของบริการบน IBM Cloud</h3><p class="mut">${s.d}</p></section>
+<section class="mt-4"><h3 class="font-semibold bl mb-2">ชื่อบริการหรือผลิตภัณฑ์ที่เกี่ยวข้อง</h3><div class="space-y-3">${s.p.map((p,k)=>`<div class="card p-4"><b>${k+1}. ${p[0]}</b><p class="text-sm mut mt-1">${p[1]}</p></div>`).join('')}</div></section>
+<section class="mt-4"><h3 class="font-semibold bl mb-2">ลักษณะการทำงานและความสามารถสำคัญ</h3><div class="grid sm:grid-cols-2 gap-3">${s.k.map(k=>`<div class="card p-4"><b class="text-sm">▸ ${k[0]}</b><p class="text-sm mut mt-1">${k[1]}</p></div>`).join('')}</div></section>
+<section class="card p-5 mt-4"><h3 class="font-semibold bl mb-1">ประโยชน์ของบริการ</h3><p class="mut">${s.b}</p></section>
+${s.x?warn(s.x):''}
+<div class="flex justify-between gap-3 mt-6"><a href="#/service/${pv.id}" class="lnk card p-3 flex-1 text-sm">← ${pv.ic} ${pv.n}</a><a href="#/service/${nx.id}" class="lnk card p-3 flex-1 text-sm text-right">${nx.ic} ${nx.n} →</a></div>
+</div></div>`},
+
+locations(){return `${H('🌍 Data Center Locations','ที่ตั้งศูนย์ข้อมูลของ IBM Cloud')}
+<div class="card p-5 mut mb-4"><p>IBM Cloud มีศูนย์ข้อมูลและพื้นที่ให้บริการกระจายหลายภูมิภาคทั่วโลก ศูนย์ข้อมูลมีระบบไฟฟ้าและระบายความร้อนสำรอง รวมถึงการควบคุมการเข้าถึงพื้นที่ทางกายภาพ</p></div>
+<h3 class="font-semibold bl mb-2">โครงสร้างพื้นที่: Region → Zone → Data Center</h3>
+<div class="grid md:grid-cols-3 gap-3 mb-6">${[['🗺️','Region','พื้นที่ให้บริการตามภูมิศาสตร์ มักใช้ชื่อเมืองหรือเขตมหานคร เช่น ดัลลัส ลอนดอน โตเกียว'],['🧩','Zone','พื้นที่ภายใน Region ที่ใช้แบ่งขอบเขตความขัดข้องของโครงสร้างพื้นฐาน'],['🏢','Data Center','สถานที่ทางกายภาพที่ติดตั้งเครื่องแม่ข่าย อุปกรณ์เครือข่าย และระบบจัดเก็บ']].map(x=>`<div class="card p-4"><div class="text-2xl">${x[0]}</div><b>${x[1]}</b><p class="text-sm mut">${x[2]}</p></div>`).join('')}</div>
+<h3 class="font-semibold bl mb-2">เปรียบเทียบ MZR vs SC-MZR</h3>
+${tbl(['หัวข้อ','MZR (Multizone Region)','SC-MZR (Single-Campus MZR)'],[['การกระจาย Zone','กระจายไปยังสถานที่แยกกัน','หลายโซนในอาคารหรือพื้นที่เดียวกัน'],['โครงสร้างพื้นฐาน','ไฟฟ้า ระบายความร้อน เครือข่ายเป็นอิสระ','บางส่วนอาจใช้ร่วมกัน แต่ออกแบบระบบสำรอง'],['ผลต่อแผนความต่อเนื่อง','กระจายความเสี่ยงทางกายภาพได้มากกว่า','กระจายความเสี่ยงทางกายภาพน้อยกว่า']])}
+<h3 class="font-semibold bl mt-8 mb-2">ตารางที่ 2.1 พื้นที่ให้บริการแบบหลายโซน</h3>
+<div class="flex flex-wrap gap-2 mb-3" id="rf">${['ทั้งหมด','อเมริกาเหนือ','อเมริกาใต้','ยุโรป','เอเชียแปซิฟิก'].map((x,i)=>`<button class="chip ${i?'':'on'}" data-r="${x}">${x}</button>`).join('')}</div>
+<div id="rt">${regTbl('ทั้งหมด')}</div>
+<p class="text-sm mut mt-2">ตารางแสดงพื้นที่หลายโซน ไม่ใช่รายชื่อศูนย์ข้อมูลทางกายภาพทั้งหมด เอกสาร IBM จัดมอนทรีออล โอซากา เจนไน และมุมไบไว้ในกลุ่ม SC-MZR ส่วนที่เหลือเป็น MZR</p>
+<h3 class="font-semibold bl mt-8 mb-2">ศูนย์ข้อมูล Classic Infrastructure</h3>
+<div class="card p-4 text-sm mut">มีศูนย์ข้อมูลในเมืองอื่น เช่น อัมสเตอร์ดัม (<b>AMS03</b>), ปารีส (<b>PAR01</b>), ซานโฮเซ และสิงคโปร์ (<b>SNG01</b>) ใช้รหัสศูนย์ข้อมูลระบุสถานที่ การมีศูนย์ข้อมูลในเมืองหนึ่งไม่ได้แปลว่าเป็น Region หลายโซน หรือรองรับบริการทุกประเภทเหมือนกัน</div>
+<h3 class="font-semibold bl mt-8 mb-2">ความพร้อมของบริการในแต่ละพื้นที่</h3>
+<div class="card p-4 text-sm mut space-y-2"><p>บริการไม่ได้เปิดครบทุกประเภทในทุกพื้นที่ ต้องตรวจว่าเครื่องเสมือน Kubernetes Code Engine และฐานข้อมูลมีใน Region ที่เลือกหรือไม่ และพิจารณาที่ตั้งของทุกองค์ประกอบร่วมกัน</p><p>บางบริการจัดซื้อผ่านพื้นที่หนึ่งแต่ข้อมูลอาจอยู่อีกพื้นที่ จึงต้องตรวจรายละเอียดการจัดเก็บของผลิตภัณฑ์โดยตรง</p></div>
+${warn('ศูนย์ข้อมูล Chennai 01 (CHE01) มีกำหนดยุติการดำเนินงานวันที่ <b>10 มิถุนายน ค.ศ. 2027</b> เป็นศูนย์ข้อมูลเดิมที่แยกจากพื้นที่ Chennai–Airtel — ควรตรวจประกาศเรื่องการจำกัดการสร้างทรัพยากรและการย้ายระบบ')}
+<h3 class="font-semibold bl mt-6 mb-2">ความสำคัญของที่ตั้งต่อการใช้งาน</h3>
+<div class="grid md:grid-cols-2 gap-3"><div class="card p-4"><b>⏱️ Latency</b><p class="text-sm mut">แอปใกล้ผู้ใช้ลดระยะทางรับส่งข้อมูล แต่ประสิทธิภาพจริงขึ้นกับเส้นทางเครือข่ายและ ISP สำหรับผู้ใช้ในไทยควรทดสอบการเชื่อมต่อจริง ไม่ดูแค่ระยะทางภูมิศาสตร์</p></div><div class="card p-4"><b>🛡️ ความต่อเนื่อง</b><p class="text-sm mut">กระจายองค์ประกอบหลาย Zone ลดผลกระทบความขัดข้องเฉพาะพื้นที่ สำรองข้าม Region ใช้เป็นพื้นฐานแผนกู้คืนภัยพิบัติ แต่ต้องออกแบบการทำสำเนา การสลับระบบ และทดสอบกู้คืน — Region หลายโซนเพียงอย่างเดียวไม่ทำให้แอปทนต่อความขัดข้องอัตโนมัติ</p></div></div>`},
+
+pricing(){return `${H('💰 Pricing Model','ค่าใช้จ่ายขึ้นอยู่กับผลิตภัณฑ์ แผนบริการ ทรัพยากรที่จัดสรร และปริมาณการใช้งาน')}
+<div class="grid sm:grid-cols-2 gap-4">
+${[['💳','3.1 Pay-As-You-Go','ชำระตามรายการที่มีค่าใช้จ่ายรายเดือน ไม่มีข้อตกลงระยะยาวระดับบัญชี เข้าถึงบริการทั้งหมดรวมแผน Free/Lite เหมาะกับงานที่ใช้งานผันแปรหรือคาดการณ์ยาก เช่น ต้นแบบและทดสอบ <b>ข้อควรระวัง:</b> บางทรัพยากรคิดตามการจัดสรร แม้ภาระงานต่ำ เช่น หยุดเครื่อง VPC แล้วค่าประมวลผลบางส่วนหยุดได้ แต่ Storage ที่ยังอยู่ยังเสียค่าใช้จ่าย'],['📝','3.2 Subscription / Enterprise Savings Plan','Subscription: ทำข้อตกลงยอดใช้จ่ายและระยะเวลากับ IBM เพื่อรับส่วนลด Enterprise Savings Plan: ส่วนลดระดับแพลตฟอร์ม เรียกเก็บรายเดือนตามการใช้จริง และได้ส่วนลดเมื่อใช้เกินยอดผูกพัน <b>ข้อควรระวัง:</b> ถ้ากำหนดยอดผูกพันสูงกว่าการใช้จริง ประโยชน์ส่วนลดอาจไม่สอดคล้องกับภาระค่าใช้จ่าย'],['📅','3.3 IBM Cloud Reservations','จองทรัพยากรล่วงหน้า 1 ปี หรือ 3 ปี เพื่อราคาที่ลดลงและการรับประกันความจุตามเงื่อนไข ระบุทรัพยากรและพื้นที่ที่ต้องการ ต่างจากข้อตกลงยอดใช้จ่ายระดับบัญชี เหมาะกับระบบหลักที่ใช้ต่อเนื่อง งานระยะสั้นหรือผันแปรเหมาะกับ On-Demand มากกว่า'],['🎁','3.4 Lite / Free / Free Trial','Lite: โควตาฟรีตามข้อจำกัดผลิตภัณฑ์ Free: สิทธิ์ใช้ฟรีรายเดือนตามเงื่อนไข Free Trial: ทดลองในระยะเวลา/ขอบเขตกำหนด <b>หมายเหตุ:</b> บัญชีใหม่ตั้งแต่ 25 ต.ค. ค.ศ. 2021 ถูกสร้างเป็น Pay-As-You-Go ที่เลือกแผน Free/Lite ได้ การใช้แผนฟรีบางบริการไม่ได้แปลว่าบริการอื่นทั้งหมดฟรี']].map(x=>`<div class="card p-5"><div class="text-3xl">${x[0]}</div><h3 class="font-semibold mt-1">${x[1]}</h3><p class="text-sm mut mt-1">${x[2]}</p></div>`).join('')}</div>
+<h3 class="font-semibold bl mt-8 mb-2">3.5 ปัจจัยที่ใช้คำนวณค่าบริการ</h3>
+${tbl(['ผลิตภัณฑ์','หน่วยคิดราคา'],[['เครื่องแม่ข่าย','ขนาด/รูปแบบทรัพยากรที่เลือก และระยะเวลาที่คิดค่าบริการ'],['Cloud Object Storage (Standard)','ปริมาณข้อมูลเฉลี่ยรายเดือน, ข้อมูลส่งออกผ่านเครือข่ายสาธารณะ, จำนวนคำขอ; บาง Storage Class มีค่าดึงข้อมูลหรือระยะเก็บขั้นต่ำ; แผน OneRate รวมบางองค์ประกอบในโครงสร้างราคาเดียว'],['Code Engine','CPU และหน่วยความจำตามระยะเวลา; ฟังก์ชันมีจำนวนคำขอ HTTP; Job คิดระหว่างประมวลผล; การสร้าง Container Image คิดแยกจากการรัน'],['บริการเสริม/สนับสนุน','สำรองข้อมูล ติดตามระบบ; Basic Support รวมใน Pay-As-You-Go ส่วน Advanced และ Premium Support มีค่าใช้จ่ายเพิ่ม']])}
+<h3 class="font-semibold bl mt-8 mb-2">3.6 การประมาณและควบคุมค่าใช้จ่าย</h3>
+<div class="grid md:grid-cols-3 gap-3">${[['🧮','Cost Estimator','เลือกผลิตภัณฑ์ แผน และทรัพยากรเพื่อประมาณก่อนใช้ ยอดจริงขึ้นกับการใช้งาน'],['📈','Billing and Usage','ติดตามข้อมูลการใช้งานและค่าใช้จ่ายหลังเริ่มใช้งาน'],['🔔','Spending Notifications','แจ้งเตือนที่ 80%, 90%, 100% ของเกณฑ์ ไม่ใช่วงเงินที่รับประกันว่าระบบจะหยุดสร้างค่าใช้จ่าย']].map(x=>`<div class="card p-4"><div class="text-2xl">${x[0]}</div><b>${x[1]}</b><p class="text-sm mut">${x[2]}</p></div>`).join('')}</div>
+<div class="card p-4 mt-3 text-sm mut">ควบคู่กับการตรวจทรัพยากรที่ไม่ใช้งาน เลือกขนาดให้เหมาะกับภาระงาน และทบทวนความคุ้มค่าของข้อตกลงระยะยาว</div>`},
+
+proscons(){return `${H('⚖️ Pros & Cons','คลิกแต่ละข้อเพื่ออ่านรายละเอียด')}
+<div class="grid md:grid-cols-2 gap-5"><div><h3 class="font-semibold text-lg mb-2" style="color:#24a148">✅ ข้อดี</h3><div class="space-y-2">${PRO.map((x,i)=>`<details class="card p-4"><summary>${i+1}. ${x[0]}</summary><p class="text-sm mut mt-2">${x[1]}</p></details>`).join('')}</div></div>
+<div><h3 class="font-semibold text-lg mb-2" style="color:#da1e28">❌ ข้อเสียและข้อจำกัด</h3><div class="space-y-2">${CON.map((x,i)=>`<details class="card p-4"><summary>${i+1}. ${x[0]}</summary><p class="text-sm mut mt-2">${x[1]}</p></details>`).join('')}</div></div></div>
+<div class="card p-5 mt-6"><b>สรุป:</b> <span class="mut">IBM Cloud เหมาะกับองค์กรที่ต้องการเชื่อมระบบเดิมกับคลาวด์ ใช้ทรัพยากรหลายรูปแบบ และจัดการความปลอดภัยอย่างเป็นระบบ การตัดสินใจควรประเมินบริการที่ต้องการ พื้นที่ให้บริการ ค่าใช้จ่ายรวม และความสามารถของบุคลากร</span></div>`},
+
+cert(){return `${H('🎓 Certification Path','เส้นทางพัฒนาความรู้และทักษะเพื่อรับการรับรองของ IBM')}
+<div class="card p-5 mut mb-4">การรับรองช่วยแสดงความรู้ด้านผลิตภัณฑ์และการประยุกต์ใช้ในบทบาทต่าง ๆ เช่น ออกแบบระบบ พัฒนาแอป และดูแลระบบ มีทั้งใบรับรองวิชาชีพและ Digital Badge ที่มีเงื่อนไขแตกต่างกัน</div>
+${warn('<b>สถานะใบรับรอง:</b> IBM Certified Technical Advocate – Cloud v5 และ IBM Certified Professional Developer – Cloud v6 ถูกถอนเมื่อ 31 ธ.ค. ค.ศ. 2025 และเว็บไซต์ระบุวันหมดอายุ 30 ก.ย. ค.ศ. 2026 จึงไม่ควรนำเสนอเป็นรายการที่ยังเปิดสมัครสอบ')}
+<div class="grid md:grid-cols-3 gap-3 my-5">${[['1','พื้นฐาน','Cloud Advocate · Technical Advocate'],['2','บทบาทงาน','Professional Architect · Developer · SRE'],['3','ความเชี่ยวชาญ','Security · DevSecOps · Cloud for Financial Services']].map(x=>`<div class="card p-5"><div class="bl font-bold">STEP ${x[0]}</div><h3 class="font-semibold text-lg">${x[1]}</h3><p class="text-sm mut">${x[2]}</p></div>`).join('')}</div>
+<p class="text-sm mut mb-3">โครงสร้างนี้เป็นแนวทางแบ่งกลุ่มความรู้ ไม่ใช่ข้อกำหนดว่าต้องสอบตามลำดับเดียวกัน แต่ละรายการมีเงื่อนไขของตนเอง</p>
+<h3 class="font-semibold bl mb-2">ตารางที่ 5.1 โครงสร้างของโครงการเดิม</h3>
+${tbl(['กลุ่มความรู้','ขอบเขตที่ศึกษา','ตัวอย่างชื่อ'],[['พื้นฐานคลาวด์','แนวคิดคลาวด์ ประเภทบริการ ประโยชน์ทางธุรกิจ','Cloud Advocate'],['พื้นฐานทางเทคนิค','องค์ประกอบแพลตฟอร์ม เครือข่าย ความปลอดภัย ความพร้อมใช้งาน','Technical Advocate'],['การออกแบบระบบ','เลือกบริการและออกแบบสถาปัตยกรรมให้ตรงความต้องการ','Professional Architect'],['การพัฒนาแอปพลิเคชัน','สร้าง ติดตั้ง และดูแลแอปบน IBM Cloud','Professional Developer'],['ดูแลความน่าเชื่อถือของระบบ','ติดตามระบบ ระบบอัตโนมัติ จัดการเหตุขัดข้อง','Site Reliability Engineer'],['ความเชี่ยวชาญเฉพาะด้าน','ความปลอดภัย DevSecOps งานที่มีข้อกำหนดเฉพาะ','Specialty และ Certification PLUS']])}
+<h3 class="font-semibold bl mt-8 mb-2">ขอบเขตความรู้ตามบทบาทงาน</h3>
+<div class="space-y-2">${[['🏗️ การออกแบบสถาปัตยกรรม (Professional Architect)','ออกแบบ วางแผน เลือกองค์ประกอบคลาวด์ ครอบคลุมประมวลผล เครือข่าย จัดเก็บ ความปลอดภัย และ Hybrid Cloud'],['💻 การพัฒนาแอปพลิเคชัน (Professional Developer)','สร้างและดูแลแอป นำโค้ดขึ้นใช้งานและเชื่อมบริการ พื้นฐานที่ IBM ระบุสำหรับ v6: ภาษาโปรแกรมสมัยใหม่ REST JSON HTTP และแนวคิดคลาวด์ (แม้รุ่นนี้ถูกถอนแล้ว แต่ยังสะท้อนทักษะที่เกี่ยวข้อง)'],['🔧 ความน่าเชื่อถือของระบบ (SRE)','ใช้ระบบอัตโนมัติ ติดตามระบบ แก้ไขเหตุขัดข้อง วิเคราะห์สาเหตุ เชื่อมโยงกับบริหารระบบ เครือข่าย DevOps และแผนกู้คืน'],['🔒 ความเชี่ยวชาญเฉพาะ','Cloud Security Engineer, DevSecOps, Cloud for Financial Services ต้องมีพื้นฐานเรื่องสิทธิ์ เครือข่าย และการดำเนินงานก่อนต่อยอด และตรวจสถานะแต่ละรายการแยกกัน']].map(x=>`<details class="card p-4"><summary>${x[0]}</summary><p class="text-sm mut mt-2">${x[1]}</p></details>`).join('')}</div>
+<h3 class="font-semibold bl mt-8 mb-2">การเรียนรู้และการสอบ</h3>
+<div class="card p-4 text-sm mut space-y-2"><p>แหล่งเรียนรู้: <b>IBM Training</b> และ <b>Learning Paths</b> ใช้ร่วมกับเอกสารผลิตภัณฑ์และการฝึกปฏิบัติ</p><p>ก่อนสมัครสอบต้องตรวจชื่อใบรับรอง รุ่น รหัสข้อสอบ วัตถุประสงค์การสอบ และข้อกำหนดที่ยังมีผล IBM ระบุว่า <b>Pearson VUE</b> เป็นผู้จัดสอบ ทั้งที่ศูนย์สอบและออนไลน์แบบมีผู้คุมสอบ</p></div>
+<h3 class="font-semibold bl mt-8 mb-2">💡 คำแนะนำสำหรับนิสิตปริญญาตรี</h3>
+<div class="card p-5"><ol class="list-decimal ml-5 space-y-1 text-sm mut"><li>สร้างพื้นฐานด้านคลาวด์และองค์ประกอบของแพลตฟอร์มก่อน</li><li>ฝึกใช้บริการตามรายวิชา: เครื่องเสมือน พื้นที่จัดเก็บ ฐานข้อมูล การกำหนดสิทธิ์</li><li>เลือกพัฒนาทักษะตามความสนใจ: ออกแบบระบบ พัฒนาแอป หรือดูแลระบบ</li><li>ทำโครงงานเชื่อมหลายบริการ เพื่อเห็นความสัมพันธ์ของสถาปัตยกรรม ความปลอดภัย และค่าใช้จ่าย</li><li>ตรวจรายการสอบที่ยังเปิดใน IBM Training / Pearson VUE ก่อนเลือก ไม่ยึดชื่อเส้นทางเดิมโดยอัตโนมัติ</li></ol><p class="text-sm mut mt-3">การรับรองเป็นหลักฐานประกอบความสามารถ ความพร้อมทำงานต้องอาศัยประสบการณ์ปฏิบัติร่วมด้วย</p></div>`},
+
+team(){return `${H('👥 ผู้จัดทำ')}
+<div class="card p-5"><p class="mut text-sm mb-3">นิสิตสาขาธุรกิจดิจิทัลและระบบสารสนเทศ ชั้นปีที่ 3</p>
+${tbl(['#','ชื่อ-สกุล','รหัสนิสิต'],[['1','นางสาวญาณิศา พรมดอนชาติ','67010918030'],['2','นางสาววรรณพร เพ็งพูญ','67010918043'],['3','นางสาวเบญจพร บุตรผา','67010918052'],['4','นางสาวอมาธิวด้า ปริตา สกาเลวิค','67010918094']])}
+</div>
+<div class="grid md:grid-cols-2 gap-4 mt-4"><div class="card p-5"><b>เสนอ</b><p class="mut">อาจารย์ ดร.อิทธิพล เอี่ยมภูงา</p></div><div class="card p-5"><b>รายวิชา</b><p class="mut text-sm">0904327 เทคโนโลยีการประมวลผลแบบคลาวด์ (Cloud Computing Technology)<br>คณะการบัญชีและการจัดการ มหาวิทยาลัยมหาสารคาม</p></div></div>
+<div class="card p-5 mt-4"><b>📝 คำนำ</b><p class="mut text-sm mt-1">รายงานจัดทำเพื่อศึกษาความหมาย ประเภท และลักษณะของบริการ Cloud Computing รวมถึงการนำบริการมาใช้พัฒนาเว็บไซต์และสนับสนุนธุรกิจดิจิทัล ครอบคลุม IaaS, CaaS, PaaS, FaaS, DBaaS, Security & IAM, IoT, Cloud Storage, Big Data Analytics, Blockchain และ Load Balancing พร้อมอธิบายความหมาย หน้าที่ ตัวอย่างการใช้งาน และข้อจำกัด</p></div>`}
+};
+function regTbl(a){return tbl(['ภูมิภาค','ประเทศ','เมือง/พื้นที่','รหัส Region','ประเภท'],REG.filter(r=>a=='ทั้งหมด'||r[0]==a).map(r=>[r[0],r[1],r[2],`<code>${r[3]}</code>`,`<span class="tag">${r[4]}</span>`]))}
+function render(){
+ const h=location.hash.replace(/^#/,'')||'/';const m=h.split('/');
+ const key=m[1]||'';
+ $('#nav').innerHTML=PAGES.map(p=>`<a href="#${p[0]}" class="${(p[0]=='/'&&!key)||(p[0]!='/'&&('/'+key==p[0]||(key=='service'&&p[0]=='/services')))?'on':''}">${p[1]}</a>`).join('');
+ $('#app').innerHTML=key==''?V.home():key=='service'?V.service(m[2]):(V[key]||V.home)();
+ window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{
+ const c=e.target.closest('[data-c]');if(c){cat=c.dataset.c;const q=kw;rerenderServices();}
+ const r=e.target.closest('[data-r]');if(r){document.querySelectorAll('#rf .chip').forEach(b=>b.classList.toggle('on',b==r));$('#rt').innerHTML=regTbl(r.dataset.r)}
+});
+function rerenderServices(){const y=scrollY;$('#app').innerHTML=V.services();scrollTo(0,y);bindQ()}
+function bindQ(){const q=$('#q');if(q){q.oninput=e=>{kw=e.target.value.toLowerCase();const p=e.target.selectionStart;rerenderServices();const n=$('#q');n.focus();n.setSelectionRange(p,p)}}}
+window.addEventListener('hashchange',()=>{render();bindQ()});
+$('#menuBtn').onclick=()=>$('#nav').classList.toggle('hidden');
+$('#nav').onclick=()=>{if(innerWidth<1024)$('#nav').classList.add('hidden')};
+$('#theme').onclick=()=>{const r=document.documentElement;const d=r.dataset.theme?r.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+render();bindQ();
+</script>
+</body>
+</html>
